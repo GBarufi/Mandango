@@ -1,0 +1,141 @@
+<html>
+  <head>
+    <title> Mandango </title>
+    <script type="text/javascript">
+    var selecionarPoltrona = -1
+    var poltronas = [[false, true, false, true, true, true, false, false, false],
+                     [false, true, false, false, true, false, true, true, true ],
+                     [true, true, true, true, true, true, false, true, false   ],
+                     [true, true, true, false, true, false, false, true, false ]];
+
+
+    window.onload = function () {
+      inicializarPoltronas();
+      document.getElementById("botao").onclick = function() {encontrarPoltronas();};
+
+      for (var i = 0; i < poltronas.length; i++) {
+        for (var j = 0; j < poltronas[i].length; j++) {
+          document.getElementById("poltrona" + (i * poltronas[i].length + j)).onclick = function () {mostrarStatusPoltrona(i);};
+        }
+      }
+    }
+
+
+    function encontrarPoltronas () {
+      var aceitarPoltrona;
+
+      if (selecionarPoltrona >= 0) {
+        selecionarPoltrona = -1;
+        inicializarPoltronas();
+      }
+
+      for (var i = 0; i < poltronas.length; i++) {
+        for (var j = 0; j < poltronas[i].length; j++) {
+          if (poltronas[i][j] && poltronas[i][j+1] && poltronas[i][j+2]) {
+            selecionarPoltrona = i * poltronas[i].length + j;
+            definirPoltrona((i * poltronas[i].length + j), "select");
+            definirPoltrona((i * poltronas[i].length + j + 1), "select");
+            definirPoltrona((i * poltronas[i].length + j + 2), "select");
+            aceitarPoltrona = confirm("As poltronas " + (i * poltronas[i].length + j + 1)+", "+(i * poltronas[i].length + j + 2)+" e "+(i * poltronas[i].length + j + 3) 
+            + " estao disponiveis. Deseja reserva-las?");
+            if (aceitarPoltrona) {
+              alert("As poltronas " + (i * poltronas[i].length + j + 1)+", "+(i * poltronas[i].length + j + 2)+" e "+(i * poltronas[i].length + j + 3) 
+              + " foram reservadas para voce.");
+              break;
+            } else {
+              selecionarPoltrona = -1;
+              definirPoltrona((i * poltronas[i].length + j), "avail");
+              definirPoltrona((i * poltronas[i].length + j + 1), "avail");
+              definirPoltrona((i * poltronas[i].length + j + 2), "avail");
+            }
+          }
+        }
+
+        if (aceitarPoltrona) {
+          break;
+        }
+      }
+
+      if (!aceitarPoltrona) {
+        alert("Nenhuma poltrona foi reservada.");
+      }
+    }
+
+
+    function inicializarPoltronas() {
+      for (var i = 0; i < poltronas.length; i++) {
+        for (var j = 0; j < poltronas[i].length; j++) {
+          if (poltronas[i][j]) {
+            document.getElementById("poltrona" + (i * poltronas[i].length + j)).src = "seat_avail.png";
+          } else {
+            document.getElementById("poltrona" + (i * poltronas[i].length + j)).src = "seat_unavail.png";
+          }
+        }
+      }
+    }
+
+
+    function definirPoltrona(num, status) {
+      document.getElementById("poltrona" + num).src = "seat_" + status + ".png";
+    }
+
+
+    function descobrirStatusPoltrona (numPoltrona) {
+      if (selecionarPoltrona != -1 && (numPoltrona == selecionarPoltrona || numPoltrona == (selecionarPoltrona + 1) || numPoltrona == (selecionarPoltrona + 2))) {
+        return "reservada para voce";
+      } else if (poltronas[Math.floor(numPoltrona / poltronas[0].length)][numPoltrona % poltronas[0].length]) { /* Como funciona o cálculo? */
+        return "disponivel";
+      } else {
+        return "indisponivel";
+      }
+    }
+
+    function mostrarStatusPoltrona (numPoltrona) {
+      alert("Esta poltrona esta " + descobrirStatusPoltrona(numPoltrona));
+    }
+
+    </script>
+  </head>
+
+  <body>
+    <div style="text-align: center; margin-top: 85px">
+      <img id="poltrona0" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona1" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona2" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona3" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona4" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona5" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona6" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona7" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona8" src="" alt="" style = "cursor:pointer" /><br />
+      <img id="poltrona9" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona10" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona11" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona12" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona13" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona14" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona15" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona16" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona17" src="" alt="" style = "cursor:pointer" /><br />
+      <img id="poltrona18" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona19" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona20" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona21" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona22" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona23" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona24" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona25" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona26" src="" alt="" style = "cursor:pointer" /><br />
+      <img id="poltrona27" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona28" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona29" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona30" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona31" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona32" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona33" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona34" src="" alt="" style = "cursor:pointer" />
+      <img id="poltrona35" src="" alt="" style = "cursor:pointer" /><br /><br />
+      <input type="button" id="botao" value="Verificar Disponibilidade"/>
+    </div>
+  </body>
+</html>
